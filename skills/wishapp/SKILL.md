@@ -32,7 +32,7 @@ WishApp (getwish.app) is a wishlist app. The WishApp tools work on the signed-in
 2. To reserve, confirm which wish and how many, then call `set_reservation`. Quantity 0 releases the user's reservation.
 3. `set_following` follows or unfollows the list so it shows under Following in WishApp.
 
-These tools never show reservations on the user's own lists. If the user asks who reserved something on their own list, say the tools don't show it and name nobody; don't try to work it out another way. On the website, reservations are hidden from the owner unless the list's Hide reservations setting is off, so never promise someone reserving a gift that the owner can't see it.
+These tools never show reservations on lists the user owns or collaborates on. If the user asks who reserved something on such a list, say the tools don't show it and name nobody; don't try to work it out another way. On the website, the owner can see reservations when the list's Hide reservations setting is off, so when the user reserves a gift, don't promise that the owner can't see it.
 
 ## Gifts reserved, given and received
 
@@ -40,9 +40,9 @@ Call `list_gifts` with `reserved` (reserved on other people's lists, not receive
 
 ## Gift ideas
 
-1. Call `list_gift_categories`, filtered by the recipient's gender and age or by a word, when the user gives them.
+1. Call `list_gift_categories`. Filter by the recipient's gender and age, or by a word, when the user gives them.
 2. Call `get_gift_category` with a category slug to get its gift ideas with shop links for the user's country.
-3. Show a short pick with each idea's link as returned. Offer to add a pick to one of the user's lists with `add_item`.
+3. Show a few of the ideas, each with its link exactly as returned. Offer to add a pick to one of the user's lists with `add_item`.
 
 ## Secret Santa
 

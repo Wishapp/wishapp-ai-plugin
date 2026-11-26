@@ -17,8 +17,8 @@ The user can organize a group, or have a spot in someone else's group, or both. 
 ## Draw names
 
 1. Show the user who's in the group and who hasn't joined yet (from `get_exchange`), then ask them to confirm the draw. Everyone who has joined is emailed and notified; people who haven't joined aren't told, so offer `send_reminders` for them.
-2. Call `draw_exchange`. If some people haven't joined, the tool refuses until you call it again with `confirm: true`; ask the user first.
-3. A redraw (`redraw: true`) replaces every match and emails everyone who has joined again. It needs `confirm: true`, and it's only possible while nobody has revealed their match.
+2. Call `draw_exchange`. If some people haven't joined, the tool refuses until you call it again with `confirm: true`. The user's confirmation in step 1 covers this, because you showed who hasn't joined.
+3. A redraw (`redraw: true`) replaces every match and emails everyone who has joined again. It's only possible while nobody has revealed their match, and it needs `confirm: true`: ask the user first.
 
 ## After the draw
 
@@ -34,4 +34,4 @@ The user can organize a group, or have a spot in someone else's group, or both. 
 ## Privacy
 
 - Never reveal or guess anyone's match other than the user's own.
-- Addresses and private Secret Santa links are never available through the tools. Don't ask for another person's address on anyone's behalf.
+- Addresses and private Secret Santa links are never available through the tools. Don't try to find another member's address some other way.

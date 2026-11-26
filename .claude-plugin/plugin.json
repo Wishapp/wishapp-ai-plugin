@@ -2,7 +2,7 @@
   "name": "wishapp",
   "displayName": "WishApp",
   "version": "1.0.1",
-  "description": "Manage WishApp wishlists from Claude: add wishes from any shop link, share lists, reserve gifts on friends' lists, hidden from the owner by default, track given and received gifts, browse gift ideas and run Secret Santa groups.",
+  "description": "Manage WishApp wishlists from Claude: add wishes from any shop link, share lists, reserve gifts on friends' lists (by default the owner can't see what's reserved), track gifts you reserved, gave and received, browse gift ideas and run Secret Santa groups.",
   "author": {
     "name": "WishApp",
     "url": "https://www.getwish.app"
@@ -18,7 +18,11 @@
     "gift ideas",
     "Secret Santa",
     "gift exchange",
-    "reserve gifts"
+    "reserve gifts",
+    "wish list",
+    "gift tracker",
+    "draw names",
+    "family gifts"
   ],
   "icon": "./assets/logo.png",
   "documentationUrl": "https://www.getwish.app/developers/mcp",

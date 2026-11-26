@@ -2,7 +2,7 @@
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "wishapp",
   "version": "1.0.1",
-  "description": "Manage WishApp wishlists from ChatGPT: add wishes from any shop link, share lists, reserve gifts on friends' lists while reservations stay hidden from the list's owner, keep track of given and received gifts, browse gift ideas and run Secret Santa groups.",
+  "description": "Manage WishApp wishlists from ChatGPT: add wishes from any shop link, share lists, reserve gifts on friends' lists (by default the owner can't see what's reserved), keep track of given and received gifts, browse gift ideas and run Secret Santa groups.",
   "author": {
     "name": "WishApp",
     "url": "https://www.getwish.app"
@@ -120,7 +120,7 @@
       },
       "publication": {
         "countries": [],
-        "release_notes": "Clearer guidance for the assistant: when it asks before a change that emails other people, how Secret Santa draws and reveals work, and what stays private. Adds the public source repository and license."
+        "release_notes": "Clearer guidance for the assistant: when it asks before a change that emails other people, how Secret Santa draws and reveals work, and what stays private. Links the public source repository and the MIT license."
       }
     }
   }
