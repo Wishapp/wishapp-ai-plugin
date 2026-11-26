@@ -10,7 +10,7 @@ WishApp (getwish.app) is a wishlist app. The WishApp tools work on the signed-in
 ## Before you start
 
 - If no WishApp tools are available, or a tool returns an authentication error, tell the user to connect WishApp. In Claude that's the plugin's Connectors tab, in Claude Code it's `/mcp`, and in ChatGPT and Codex it's the plugin's connect prompt. Don't make up wishlists, wishes or results.
-- Start from what the user has: `list_wishlists` for their lists, `get_wishlist` for a getwish.app link, `list_exchanges` for Secret Santa groups. Pass the ids those return to later calls; never guess an id.
+- Start from what the user has: `list_wishlists` for their lists, `get_wishlist` for a getwish.app link, `list_exchanges` for Secret Santa groups. Use the ids those return in later calls; never guess an id.
 - When a request could mean more than one list or group, ask which one. Don't pick one silently.
 
 ## Add a wish from a link
@@ -21,7 +21,7 @@ WishApp (getwish.app) is a wishlist app. The WishApp tools work on the signed-in
 
 ## Manage lists and wishes
 
-- `create_wishlist` makes a list anyone with its link can see; pass `PRIVATE` visibility only when the user asks for a private list. Return the share link it gives back.
+- `create_wishlist` makes a list anyone with its link can see; set `visibility` to `PRIVATE` only when the user asks for a private list. Return the share link it gives back.
 - `update_wishlist` changes title, description, visibility, currency or hidden reservations. Making a list private removes it from the user's Secret Santa groups: say so before doing it.
 - `update_item` changes a wish; `set_item_received` marks one received, optionally with a thank-you note that the givers see.
 - Ask before `delete_wishlist` or `delete_item`. Both are permanent and can notify people who reserved gifts.
