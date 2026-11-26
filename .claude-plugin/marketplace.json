@@ -8,7 +8,7 @@
   "plugins": [
     {
       "name": "wishapp",
-      "source": "./",
+      "source": "./plugin",
       "description": "Wishlists, gift reservations, gift ideas and Secret Santa from your WishApp account."
     }
   ]
