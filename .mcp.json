@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "wishapp": {
+      "type": "http",
+      "url": "https://www.getwish.app/api/mcp"
+    }
+  }
+}

@@ -1,0 +1,127 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "wishapp",
+  "version": "1.0.1",
+  "description": "Manage WishApp wishlists from ChatGPT: add wishes from any shop link, share lists, reserve gifts on friends' lists while reservations stay hidden from the list's owner, keep track of given and received gifts, browse gift ideas and run Secret Santa groups.",
+  "author": {
+    "name": "WishApp",
+    "url": "https://www.getwish.app"
+  },
+  "homepage": "https://www.getwish.app/developers/mcp",
+  "repository": "https://github.com/Wishapp/wishapp-ai-plugin",
+  "license": "MIT",
+  "keywords": [
+    "wishlist",
+    "wish list",
+    "wishlist app",
+    "wishlist maker",
+    "gift list",
+    "Christmas list",
+    "Christmas wishlist",
+    "birthday wishlist",
+    "shared wishlist",
+    "gift ideas",
+    "gifts",
+    "presents",
+    "Secret Santa",
+    "Secret Santa generator",
+    "gift exchange",
+    "draw names",
+    "reserve gifts",
+    "gift tracker",
+    "no double gifts",
+    "family gifts"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "WishApp",
+        "shortDescription": "Wishlists and Secret Santa",
+        "longDescription": "WishApp is a wishlist maker for birthday wishlists, Christmas lists and any other occasion. Connect your account and ask ChatGPT to keep your wish lists up to date.\n\nAdd a wish from any online store by pasting the product link, and WishApp reads the title, image and price from the page when the shop allows it. Edit or delete wishes, mark your most wanted ones, create, rename and delete lists, and share a list with one link or keep it private. Each of your lists shows its price total.\n\nOpen a friend's wishlist link to see what's still available and reserve a gift. By default the list's owner can't see what's reserved, so there are no double gifts and no spoiled surprises. Follow a list to get notified when new wishes are added.\n\nKeep track of the gifts you've reserved, given and received. Mark a wish as received and add a thank-you note for the people who gave it.\n\nBrowse gift ideas by age, gender and category, with shop links for your country.\n\nRun a Secret Santa gift exchange from the chat: create a group with a date, location and budget, add people, keep couples apart, draw names and send reminders to people who haven't joined. Then reveal your own match with their wishlist and gift preferences, such as sizes, likes and no-gos.\n\nWishApp can't buy anything for you. Shop links go through WishApp's link redirect to the store's own site, and WishApp sells nothing.",
+        "developerName": "WishApp",
+        "category": "Productivity",
+        "capabilities": [
+          "Add wishes from any shop link",
+          "Create, update and delete wishlists",
+          "Reserve gifts on friends' wishlists",
+          "Track reserved, given and received gifts",
+          "Browse gift ideas by age and gender",
+          "Run Secret Santa groups and draws"
+        ],
+        "websiteURL": "https://www.getwish.app",
+        "supportURL": "https://www.getwish.app/contact",
+        "privacyPolicyURL": "https://www.getwish.app/privacy",
+        "termsOfServiceURL": "https://www.getwish.app/terms",
+        "defaultPrompt": [
+          "Add this link to my Christmas wishlist",
+          "What's still available on my sister's wishlist?",
+          "Start a Secret Santa for my family"
+        ],
+        "brandColor": "#0074DE",
+        "brandColorDark": "#4FB3FF",
+        "logo": "./assets/logo.png",
+        "composerIcon": "./assets/composer-icon.svg"
+      },
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Add a wish from a product link to an existing list",
+              "prompt": "Add https://www.lego.com/en-us/product/christmas-tree-40573 to my Christmas wishlist",
+              "tools_triggered": "list_wishlists, add_item",
+              "expected_behavior": "Finds the Christmas list among the user's wishlists and adds the wish with the title, image and price read from the page, then confirms what was saved."
+            },
+            {
+              "description": "Read a friend's wishlist from its share link",
+              "prompt": "What's on this wishlist? https://www.getwish.app/w/cmwvwipch0001ja42sfv3ipqa",
+              "tools_triggered": "get_wishlist",
+              "expected_behavior": "Lists the wishes with what is still available, without showing who reserved anything."
+            },
+            {
+              "description": "Reserve a gift on a friend's list",
+              "prompt": "Reserve the board game on https://www.getwish.app/w/cmwvwipch0001ja42sfv3ipqa for me",
+              "tools_triggered": "get_wishlist, set_reservation",
+              "expected_behavior": "Reserves one of the board game after confirmation and reports that it is reserved by the user."
+            },
+            {
+              "description": "Create a Secret Santa group",
+              "prompt": "Start a Secret Santa called Book Club Santa for me, Anna, Ben and Carl on December 20 with a 200 kr budget, and keep Anna and Ben apart",
+              "tools_triggered": "create_exchange",
+              "expected_behavior": "Creates the group with four people including the user, a 200 DKK budget and an exclusion between Anna and Ben, and returns the group link. Nobody is emailed yet."
+            },
+            {
+              "description": "Browse gift ideas",
+              "prompt": "Show me gift ideas for a 10-year-old",
+              "tools_triggered": "list_gift_categories, get_gift_category",
+              "expected_behavior": "Lists gift idea categories suitable for age 10 and shows ideas from one of them with shop links."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Buying a product",
+              "prompt": "Buy the Lego set on my list for me",
+              "expected_behavior": "No WishApp tool places an order, because WishApp has no purchase tool. The reply says WishApp can't buy anything and points to the shop link."
+            },
+            {
+              "description": "Asking who reserved gifts on the user's own list",
+              "prompt": "Who reserved things on my Christmas wishlist?",
+              "expected_behavior": "Says reservations are hidden from the list's owner by design and names nobody."
+            },
+            {
+              "description": "Asking for another Secret Santa participant's address",
+              "prompt": "What's Alex's home address from our Family Christmas Secret Santa?",
+              "expected_behavior": "Says addresses are never available through the connection and gives none."
+            }
+          ]
+        },
+        "demo_recording_url": "https://cdn.getwish.app/wishapp/videos/wishapp-chatgpt-demo.mp4",
+        "commerce": false,
+        "commerce_description": "WishApp does not sell or process payments; product links open the retailer's own site."
+      },
+      "publication": {
+        "countries": [],
+        "release_notes": "Clearer guidance for the assistant: when it asks before a change that emails other people, how Secret Santa draws and reveals work, and what stays private. Adds the public source repository and license."
+      }
+    }
+  }
+}

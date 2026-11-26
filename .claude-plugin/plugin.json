@@ -1,0 +1,28 @@
+{
+  "name": "wishapp",
+  "displayName": "WishApp",
+  "version": "1.0.1",
+  "description": "Manage WishApp wishlists from Claude: add wishes from any shop link, share lists, reserve gifts on friends' lists, hidden from the owner by default, track given and received gifts, browse gift ideas and run Secret Santa groups.",
+  "author": {
+    "name": "WishApp",
+    "url": "https://www.getwish.app"
+  },
+  "homepage": "https://www.getwish.app/developers/mcp",
+  "repository": "https://github.com/Wishapp/wishapp-ai-plugin",
+  "license": "MIT",
+  "keywords": [
+    "wishlist",
+    "gift list",
+    "Christmas list",
+    "birthday wishlist",
+    "gift ideas",
+    "Secret Santa",
+    "gift exchange",
+    "reserve gifts"
+  ],
+  "icon": "./assets/logo.png",
+  "documentationUrl": "https://www.getwish.app/developers/mcp",
+  "supportUrl": "https://www.getwish.app/contact",
+  "privacyPolicyUrl": "https://www.getwish.app/privacy",
+  "termsOfServiceUrl": "https://www.getwish.app/terms"
+}

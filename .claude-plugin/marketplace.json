@@ -1,0 +1,15 @@
+{
+  "name": "wishapp",
+  "description": "The WishApp plugin: wishlists, gift reservations, gift ideas and Secret Santa in Claude Code.",
+  "owner": {
+    "name": "WishApp",
+    "url": "https://www.getwish.app"
+  },
+  "plugins": [
+    {
+      "name": "wishapp",
+      "source": "./",
+      "description": "Wishlists, gift reservations, gift ideas and Secret Santa from your WishApp account."
+    }
+  ]
+}

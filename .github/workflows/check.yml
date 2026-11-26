@@ -1,0 +1,77 @@
+name: Check
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+
+# Claude's directory ships whatever lands on main, so the checks run with a
+# read-only token and exact tool versions; only the release job can write.
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Validate the Claude plugin
+        run: |
+          npx --yes @anthropic-ai/claude-code@2.1.332 plugin validate --profile directory --strict .claude-plugin/plugin.json
+          npx --yes @anthropic-ai/claude-code@2.1.332 plugin validate --profile directory --strict .
+
+      # Only plugin.json: the 1.0.0 mcp.json schema has no per-server
+      # extensions, but OpenAI's auth block lives there (its docs and its
+      # portal accept it), so mcp.json is checked by the next step instead.
+      - name: Validate the Agent Plugins manifest
+        run: |
+          curl -fsSL https://agent-plugins.org/schemas/1.0.0/plugin.schema.json -o /tmp/plugin.schema.json
+          npx --yes -p ajv-cli@5.0.0 -p ajv-formats@3.0.1 ajv validate --spec=draft2020 --strict=false -c ajv-formats -s /tmp/plugin.schema.json -d plugin.json
+
+      - name: Both platforms share name, version and MCP server
+        run: |
+          node -e '
+            const a = require("./plugin.json"), c = require("./.claude-plugin/plugin.json");
+            if (a.name !== c.name || a.version !== c.version) {
+              console.error(`plugin.json ${a.name}@${a.version} vs .claude-plugin/plugin.json ${c.name}@${c.version}`);
+              process.exit(1);
+            }
+            const urls = (f) => Object.values(require(f).mcpServers).map((s) => s.url).join(",");
+            if (urls("./mcp.json") !== urls("./.mcp.json")) {
+              console.error(`mcp.json ${urls("./mcp.json")} vs .mcp.json ${urls("./.mcp.json")}`);
+              process.exit(1);
+            }
+            if (process.env.GITHUB_REF_TYPE === "tag" && process.env.GITHUB_REF_NAME !== `v${a.version}`) {
+              console.error(`tag ${process.env.GITHUB_REF_NAME} does not match version ${a.version}`);
+              process.exit(1);
+            }'
+
+      - name: Build the ChatGPT package
+        run: scripts/build-openai-zip.sh dist
+
+  release:
+    needs: check
+    if: github.ref_type == 'tag'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Build the ChatGPT package
+        run: scripts/build-openai-zip.sh dist
+
+      - name: Attach the package to the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" dist/*.zip --repo "$GITHUB_REPOSITORY" --title "$GITHUB_REF_NAME" --generate-notes
